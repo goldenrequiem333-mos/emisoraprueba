@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#10110f" />
+    <meta
+      name="description"
+      content="Descubre emisoras de radio y escucha música en directo desde cualquier lugar."
+    />
+    <title>Cajitas — Radio para descubrir</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Cajitas, inicio" data-view="public">
+        <span class="brand-mark" aria-hidden="true">c.</span>
+        <span>cajitas<span class="brand-period">.</span></span>
+      </a>
+      <nav class="main-nav" aria-label="Navegación principal">
+        <button class="nav-link is-active" data-view="public">Explorar</button>
+        <button class="nav-link" data-view="admin">Administrar</button>
+      </nav>
+      <a class="topbar-cta" href="#stations" data-view="public">
+        <span class="live-dot" aria-hidden="true"></span>
+        En directo
+      </a>
+    </header>
+
+    <main>
+      <section id="public-view" class="view">
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="live-dot"></span> UNA VENTANA AL MUNDO</p>
+            <h1>Encuentra tu<br />próxima <span>frecuencia.</span></h1>
+            <p class="hero-description">
+              Emisoras que suenan a algo. Descubre radios independientes y escucha lo que está pasando, en cualquier parte.
+            </p>
+            <a class="button button-light" href="#stations">
+              Explorar emisoras <span aria-hidden="true">↘</span>
+            </a>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="orbit orbit-one"></div>
+            <div class="orbit orbit-two"></div>
+            <div class="hero-disc">
+              <div class="disc-label">ON AIR<br /><span>FM</span></div>
+            </div>
+            <div class="hero-sticker sticker-top">★ &nbsp; RADIO LIBRE</div>
+            <div class="hero-sticker sticker-bottom">SUBE EL VOLUMEN ↗</div>
+            <div class="soundwave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="hero-foot">
+            <span>EL DIAL NO TIENE FRONTERAS</span>
+            <span>01 — 04</span>
+          </div>
+        </section>
+
+        <section id="stations" class="stations-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">TU DIAL, A TU MANERA</p>
+              <h2>Pequeñas cajas.<br /><span>Grandes descubrimientos.</span></h2>
+            </div>
+            <p class="section-note"><span class="live-dot"></span> Radio en vivo, desde donde estés.</p>
+          </div>
+          <div class="toolbar">
+            <div class="filter-list" role="group" aria-label="Filtrar emisoras">
+              <button class="filter-chip is-selected" data-filter="Todas">Todas <span id="all-count">0</span></button>
+              <button class="filter-chip" data-filter="Música">Música</button>
+              <button class="filter-chip" data-filter="Cultura">Cultura</button>
+              <button class="filter-chip" data-filter="Noticias">Noticias</button>
+            </div>
+            <label class="search-box">
+              <span class="search-icon" aria-hidden="true">⌕</span>
+              <input id="station-search" type="search" placeholder="Buscar emisora..." aria-label="Buscar emisora" />
+              <kbd>CTRL K</kbd>
+            </label>
+          </div>
+          <div id="station-grid" class="station-grid" aria-live="polite"></div>
+          <div id="empty-state" class="empty-state" hidden>
+            <span class="empty-icon">◌</span>
+            <h3>Aún no hay cajitas por aquí</h3>
+            <p>Prueba otra búsqueda o vuelve más tarde.</p>
+          </div>
+          <div class="catalog-footer">
+            <span>EL MUNDO SUENA MEJOR JUNTOS.</span>
+            <span id="catalog-count">0 EMISORAS</span>
+          </div>
+        </section>
+      </section>
+
+      <section id="admin-view" class="view admin-view" hidden>
+        <div class="admin-heading">
+          <div>
+            <p class="eyebrow">ESTUDIO DE CONTROL</p>
+            <h1>Tu radio,<br /><span>tus reglas.</span></h1>
+            <p class="admin-intro">Gestiona las emisoras que aparecen en tu dial.</p>
+          </div>
+          <div class="admin-stats">
+            <div class="stat-card"><span>EMISORAS</span><strong id="stat-total">0</strong><small>En tu colección</small></div>
+            <div class="stat-card stat-highlight"><span>PUBLICADAS</span><strong id="stat-published">0</strong><small>Al aire ahora</small></div>
+          </div>
+        </div>
+
+        <div class="admin-layout">
+          <section class="admin-panel form-panel">
+            <div class="panel-heading">
+              <div><p class="eyebrow">NUEVA EN EL DIAL</p><h2 id="form-heading">Añadir emisora</h2></div>
+              <span class="panel-icon" aria-hidden="true">＋</span>
+            </div>
+            <form id="station-form">
+              <input id="station-id" type="hidden" />
+              <label class="field-label" for="station-name">Nombre de la emisora <span>*</span></label>
+              <input class="text-field" id="station-name" name="name" maxlength="60" placeholder="Ej. Radio Horizonte" required />
+              <div class="field-row">
+                <div>
+                  <label class="field-label" for="station-city">Ciudad / país</label>
+                  <input class="text-field" id="station-city" name="city" maxlength="60" placeholder="Ej. Ciudad de México" />
+                </div>
+                <div>
+                  <label class="field-label" for="station-category">Categoría</label>
+                  <select class="text-field" id="station-category" name="category">
+                    <option>Música</option>
+                    <option>Cultura</option>
+                    <option>Noticias</option>
+                  </select>
+                </div>
+              </div>
+              <label class="field-label" for="station-url">URL del streaming <span>*</span></label>
+              <input class="text-field" id="station-url" name="url" type="url" placeholder="https://servidor.com/stream" required />
+              <p class="field-hint">Pega la dirección directa del audio (MP3, AAC o stream compatible).</p>
+              <label class="field-label" for="station-description">Descripción</label>
+              <textarea class="text-field" id="station-description" name="description" rows="3" maxlength="150" placeholder="¿Qué se escucha en esta cajita?"></textarea>
+              <div class="field-row form-bottom-row">
+                <div>
+                  <label class="field-label" for="station-emoji">Icono</label>
+                  <select class="text-field emoji-select" id="station-emoji" name="emoji">
+                    <option value="🎧">🎧 Audífonos</option>
+                    <option value="🌴">🌴 Tropical</option>
+                    <option value="🎷">🎷 Jazz</option>
+                    <option value="🎸">🎸 Rock</option>
+                    <option value="🌙">🌙 Nocturna</option>
+                    <option value="📻">📻 Clásica</option>
+                  </select>
+                </div>
+                <label class="publish-toggle"><input id="station-published" type="checkbox" checked /><span class="toggle-ui"></span><span>Publicar ahora</span></label>
+              </div>
+              <div class="form-actions">
+                <button class="button button-primary" id="save-station" type="submit">Publicar emisora <span aria-hidden="true">↗</span></button>
+                <button class="button button-quiet" id="cancel-edit" type="button" hidden>Cancelar</button>
+              </div>
+              <p id="form-message" class="form-message" role="status" aria-live="polite"></p>
+            </form>
+          </section>
+
+          <section class="admin-panel manage-panel">
+            <div class="panel-heading manage-heading">
+              <div><p class="eyebrow">TU COLECCIÓN</p><h2>Emisoras</h2></div>
+              <span id="manage-count" class="manage-count">0 TOTAL</span>
+            </div>
+            <p class="storage-notice"><span aria-hidden="true">ⓘ</span> Los cambios se guardan en este navegador.</p>
+            <div id="admin-station-list" class="admin-station-list"></div>
+            <div id="admin-empty" class="admin-empty" hidden>
+              <span>◌</span><p>Tu dial está vacío.<br />Añade la primera emisora.</p>
+            </div>
+          </section>
+        </div>
+        <div class="admin-back">
+          <a href="#" data-view="public">← Volver a explorar</a>
+          <span>CAJITAS RADIO · ESTUDIO DE CONTROL</span>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="brand footer-brand" href="#" data-view="public"><span class="brand-mark">c.</span><span>cajitas<span class="brand-period">.</span></span></a>
+      <span>HECHO PARA ESCUCHAR MEJOR. <span class="footer-star">✳</span></span>
+      <span>© 2025 CAJITAS RADIO</span>
+    </footer>
+  </body>
+</html>
